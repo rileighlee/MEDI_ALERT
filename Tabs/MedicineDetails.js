@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -42,7 +42,7 @@ const MedicineDetails = () => {
       </View>
       <View style={styles.lowerHalf}>
         {categories.map((category, index) => (
-          <TouchableOpacity
+          <Pressable
             key={index}
             onPress={() => handleCategoryClick(index)}
             style={styles.barContainer}
@@ -56,7 +56,7 @@ const MedicineDetails = () => {
                 <Text style={styles.infoText}>{category.info}</Text>
               </View>
             )}
-          </TouchableOpacity>
+          </Pressable>
         ))}
         <Text style={styles.consultDoctorText}>
           If symptoms persist, consult your doctor.

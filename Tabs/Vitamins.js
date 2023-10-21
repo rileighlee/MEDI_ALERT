@@ -6,6 +6,7 @@ const { height: screenHeight } = Dimensions.get('window');
 const Vitamins = () => {
   const [selectedBubble, setSelectedBubble] = useState(null);
 
+
   const bubbleData = [
     { title: 'A', description: 'Description for A', image: require('../assets/A.png') },
     { title: 'B1', description: 'Description for B1', image: require('../assets/B1.png') },
@@ -26,26 +27,22 @@ const Vitamins = () => {
     setSelectedBubble(index === selectedBubble ? null : index);
   };
 
+
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
         {/* Upper half content */}
         <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/vitamins.png')} style={styles.vitaminsImage} />
         <Text style={styles.title}>Vitamins Cheat Sheet</Text>
-        <TouchableOpacity style={styles.backIconContainer}>
-          <View style={styles.backIconCircle}>
-            <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/backicon.png')} style={styles.backIcon} />
-          </View>
-        </TouchableOpacity>
       </View>
       <View style={styles.lowerHalf}>
         {/* Lower half content */}
         {bubbleData.map((bubble, index) => (
           <TouchableOpacity
-            key={index}
-            onPress={() => handleBubbleClick(index)}
-            style={[styles.bubbleContainer, { backgroundColor: selectedBubble === index ? '#89fff8' : 'white' }]}
-          >
+          key={index}
+          onPress={() => handleBubbleClick(index)}
+          style={[styles.bubbleContainer, { backgroundColor: selectedBubble === index ? '#89fff8' : 'white' }]}
+        >
             <Text style={styles.bubbleTitle}>{bubble.title}</Text>
             {selectedBubble === index && (
               <View style={styles.bubbleContent}>
@@ -87,23 +84,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF5959',
-  },
-  backIconContainer: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-  },
-  backIconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backIcon: {
-    width: 20,
-    height: 20,
   },
   lowerHalf: {
     marginTop: 10,

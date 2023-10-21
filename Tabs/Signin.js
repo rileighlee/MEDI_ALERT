@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, Pressable, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
@@ -11,7 +11,7 @@ const LoginScreen = () => {
 
   const handleSignUpPress = () => {
     // Navigate to the signup screen
-    navigation.navigate('SignUp'); // Replace 'SignUp' with the name of your signup screen
+    navigation.navigate('Register'); // Replace 'SignUp' with the name of your signup screen
   };
 
   return (
@@ -31,30 +31,30 @@ const LoginScreen = () => {
           secureTextEntry={true}
           // Add onChangeText to handle password input
         />
-        <TouchableOpacity style={styles.loginButton} onPress={handleHomePage}>
+        <Pressable style={styles.loginButton} onPress={handleHomePage}>
           <Text>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.forgotPassword}>
+        </Pressable>
+        <Pressable style={styles.forgotPassword}>
           <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.divider}>
         <Text style={styles.dividerText}>────────── or ──────────</Text>
       </View>
       <View style={styles.socialButtons}>
-        <TouchableOpacity style={styles.socialButton}>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/google.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
+        </Pressable>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/facebook.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
+        </Pressable>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/apple.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
-      <TouchableOpacity style={styles.signUp} onPress={handleSignUpPress}>
+      <Pressable style={styles.signUp} onPress={handleSignUpPress}>
         <Text style={styles.signUpText}>Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Sign Up</Text></Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

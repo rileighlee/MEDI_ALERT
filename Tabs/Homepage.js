@@ -1,69 +1,77 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
 const HomePage = () => {
-  const navigation = useNavigation('Signin');
+  const navigation = useNavigation();
 
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = () => {
-    // Assuming you have a 'navigation' object available, navigate to 'MedicineDetails'
-    navigation.navigate('MedicineDetails', { searchText });
+    const searchLowerCase = searchText.toLowerCase();
+
+    // Check if searchText contains variations of "vitamin"
+    if (searchLowerCase.includes('vitamin')) {
+      // Navigate to the 'Vitamins' screen
+      navigation.navigate('Vitamins');
+    } else {
+      // Navigate to 'MedicineDetails' or handle other cases
+      navigation.navigate('MedicineDetails', { searchText });
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        <Text style={styles.smallText}>Welcome, John Doe</Text>
+        <Text style={styles.smallText}>Welcome USER</Text>
         <Text style={styles.bigText}>Finding a perfect medicine?</Text>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search medicine ex. 'Biogesic'"
+            placeholder="Search medicine ex.'Biogesic'"
             onChangeText={setSearchText}
             value={searchText}
           />
-          <TouchableOpacity onPress={handleSearch} style={styles.searchIcon}>
+          <Pressable onPress={handleSearch} style={styles.searchIcon}>
             <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/search.png')} style={styles.searchImage} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
       <View style={styles.lowerHalf}>
         <Text style={styles.categoriesText}>Categories</Text>
         <View style={styles.iconContainer}>
-          <TouchableOpacity
+          <Pressable
             style={styles.icon}
             onPress={() => navigation.navigate('MedicineDetails', { searchText: 'Medicine' })}
           >
             <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/medicine.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Medicine</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             style={styles.icon}
             onPress={() => navigation.navigate('Vitamins')}
           >
             <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/vitamins.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Vitamins</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Pressable>
+          <Pressable
             style={styles.icon}
             onPress={() => navigation.navigate('MedicineComparer')}
           >
             <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/comparing.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Medicine Comparer</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
-        <TouchableOpacity
+        <Pressable
           style={styles.calendarButton}
           onPress={() => {
             // Handle calendar button click
           }}
         >
           <Text style={styles.calendarText}>Calendar</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
@@ -106,13 +114,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 25,
-    paddingLeft: 45,
+    paddingLeft: 4,
   },
   searchInput: {
-    flex: 1,
+    flex: 10,
     fontSize: 16,
-    paddingVertical: 10,
-
+    paddingVertical: 5,
   },
   searchIcon: {
     padding: 10,
@@ -156,5 +163,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomePage;
-
-
