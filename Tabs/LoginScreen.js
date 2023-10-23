@@ -32,7 +32,7 @@ const LoginScreen = () => {
           // Add onChangeText to handle password input
         />
         <Pressable style={styles.loginButton} onPress={handleHomePage}>
-          <Text>Login</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </Pressable>
         <Pressable style={styles.forgotPassword}>
           <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     fontFamily: 'roboto',
+    position: 'absolute'
   },
   form: {
     marginTop: 40,
@@ -89,22 +90,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 15,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
   },
   loginButton: {
     backgroundColor: 'lightblue',
     borderRadius: 10,
     padding: 15,
     alignItems: 'center',
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
   },
   buttonText: {
     color: 'white',
@@ -133,7 +124,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   socialButton: {
-    backgroundColor: 'transparent', 
+    backgroundColor: 'transparent',
     padding: 30,
     alignItems: 'center',
   },
@@ -153,4 +144,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-

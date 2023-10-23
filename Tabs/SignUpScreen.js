@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const SignUpScreen = () => {
@@ -37,22 +37,22 @@ const SignUpScreen = () => {
           secureTextEntry={true}
         />
       </View>
-      <TouchableOpacity style={styles.signUpButton} onPress={handleSignUpPress}>
+      <Pressable style={styles.signUpButton} onPress={handleSignUpPress}>
         <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
+      </Pressable>
       <View style={styles.divider}>
         <Text style={styles.dividerText}>────────── or ──────────</Text>
       </View>
       <View style={styles.socialButtons}>
-        <TouchableOpacity style={styles.socialButton}>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/google.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
+        </Pressable>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/facebook.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
+        </Pressable>
+        <Pressable style={styles.socialButton}>
           <Image source={require('../assets/apple.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
+    position: 'absolute'
   },
   form: {
     marginTop: 40,

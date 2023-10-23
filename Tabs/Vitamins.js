@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Image, Dimensions } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
 const Vitamins = () => {
   const [selectedBubble, setSelectedBubble] = useState(null);
-
 
   const bubbleData = [
     { title: 'A', description: 'Description for A', image: require('../assets/A.png') },
@@ -20,29 +19,25 @@ const Vitamins = () => {
     { title: 'D', description: 'Description for D', image: require('../assets/D.png') },
     { title: 'E', description: 'Description for E', image: require('../assets/E.png') },
     { title: 'K', description: 'Description for K', image: require('../assets/K.png') },
-    // Add more bubble data for B, C, D, E, K, B1, B2, B3, B6, B7, B9
   ];
 
   const handleBubbleClick = (index) => {
     setSelectedBubble(index === selectedBubble ? null : index);
   };
 
-
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        {/* Upper half content */}
         <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/vitamins.png')} style={styles.vitaminsImage} />
         <Text style={styles.title}>Vitamins Cheat Sheet</Text>
       </View>
       <View style={styles.lowerHalf}>
-        {/* Lower half content */}
         {bubbleData.map((bubble, index) => (
-          <TouchableOpacity
-          key={index}
-          onPress={() => handleBubbleClick(index)}
-          style={[styles.bubbleContainer, { backgroundColor: selectedBubble === index ? '#89fff8' : 'white' }]}
-        >
+          <Pressable
+            key={index}
+            onPress={() => handleBubbleClick(index)}
+            style={[styles.bubbleContainer, { backgroundColor: selectedBubble === index ? '#89fff8' : 'white' }]}
+          >
             <Text style={styles.bubbleTitle}>{bubble.title}</Text>
             {selectedBubble === index && (
               <View style={styles.bubbleContent}>
@@ -52,13 +47,12 @@ const Vitamins = () => {
                 </View>
               </View>
             )}
-          </TouchableOpacity>
+          </Pressable>
         ))}
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -89,17 +83,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',  // Adjusted justify content
-    paddingHorizontal: 10,  // Added padding for spacingpadding for spacing
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   bubbleContainer: {
-    width: '20%',  // Adjusted width to fit 3 bubbles per row
+    width: '20%',
     aspectRatio: 1,
     borderRadius: 100,
     marginVertical: 5,
     marginLeft: '5%',
     marginRight: '5%',
-    //marginBottom: 20,  // Adjusted margin for vertical spacing
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -115,13 +108,12 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,  // Adjusted margin for vertical spacing
+    marginBottom: 10,
   },
-// Adjusted styles for the bubble image
   bubbleImage: {
-    width: 5000,  // Adjusted width
-    height: 5000,  // Adjusted height
-    resizeMode: "center",  // Maintain the aspect ratio
+    width: 5000,
+    height: 5000,
+    resizeMode: "center",
   },
   human2Image: {
     width: 50,

@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
 const HomePage = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  // Extract the fullName parameter from the route's params
+  const fullName = route.params?.fullName;
 
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = () => {
     const searchLowerCase = searchText.toLowerCase();
 
-    // Check if searchText contains variations of "vitamin"
     if (searchLowerCase.includes('vitamin')) {
-      // Navigate to the 'Vitamins' screen
       navigation.navigate('Vitamins');
     } else {
-      // Navigate to 'MedicineDetails' or handle other cases
       navigation.navigate('MedicineDetails', { searchText });
     }
   };
@@ -25,7 +26,8 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        <Text style={styles.smallText}>Welcome USER</Text>
+        {/* Display the user's name in the "Welcome USER" text */}
+        <Text style={styles.smallText}>Welcome {fullName}</Text>
         <Text style={styles.bigText}>Finding a perfect medicine?</Text>
         <View style={styles.searchContainer}>
           <TextInput

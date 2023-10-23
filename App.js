@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './Tabs/Signup'; // Import your login screen component
+import LoginScreen from './Tabs/LoginScreen'; // Import your login screen component
 import Button from './button/button'; // Import the LoginButton component
 import HomePage from './Tabs/Homepage';
-import SignUpScreen from './Tabs/Create';
+import SignUpScreen from './Tabs/SignUpScreen';
 import MedicineDetails from './Tabs/MedicineDetails';
 import Vitamins from './Tabs/Vitamins';
 
