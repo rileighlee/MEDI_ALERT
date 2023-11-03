@@ -37,7 +37,7 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        <Text style={styles.smallText}>Welcome {fullName}</Text>
+        <Text style={styles.smallText}>Welcome USER{fullName}</Text>
         <Text style={styles.bigText}>Finding a perfect medicine?</Text>
         <View style={styles.searchContainer}>
           <TextInput
