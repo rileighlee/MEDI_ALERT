@@ -33,10 +33,10 @@ const MedicineDetails = () => {
     <View style={styles.container}>
       <View style={styles.upperHalf}>
         <View style={styles.leftContent}>
-          <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/human.png')} style={styles.humanImage} />
+          <Image source={require('../assets/human.png')} style={styles.humanImage} />
         </View>
         <View style={styles.rightContent}>
-          <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/biogesic.jpg')} style={styles.medicineImage} />
+          <Image source={require('../assets/biogesic.jpg')} style={styles.medicineImage} />
           <Text style={styles.medicineName}>Medicine Name</Text>
         </View>
       </View>

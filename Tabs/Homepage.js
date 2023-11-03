@@ -37,7 +37,7 @@ const HomePage = () => {
             value={searchText}
           />
           <Pressable onPress={handleSearch} style={styles.searchIcon}>
-            <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/search.png')} style={styles.searchImage} />
+            <Image source={require('../assets/search.png')} style={styles.searchImage} />
           </Pressable>
         </View>
       </View>
@@ -48,21 +48,21 @@ const HomePage = () => {
             style={styles.icon}
             onPress={() => navigation.navigate('MedicineDetails', { searchText: 'Medicine' })}
           >
-            <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/medicine.png')} style={styles.iconImage} />
+            <Image source={require('../assets/medicine.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Medicine</Text>
           </Pressable>
           <Pressable
             style={styles.icon}
             onPress={() => navigation.navigate('Vitamins')}
           >
-            <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/vitamins.png')} style={styles.iconImage} />
+            <Image source={require('../assets/vitamins.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Vitamins</Text>
           </Pressable>
           <Pressable
             style={styles.icon}
             onPress={() => navigation.navigate('MedicineComparer')}
           >
-            <Image source={require('C:/Users/makir/OneDrive/Desktop/MEDI_ALERT/assets/comparing.png')} style={styles.iconImage} />
+            <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
             <Text style={styles.iconText}>Medicine Comparer</Text>
           </Pressable>
         </View>
