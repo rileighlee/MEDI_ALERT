@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './Tabs/LoginScreen'; // Import your login screen component
-import Button from './button/button'; // Import the LoginButton component
+import LoginScreen from './Tabs/LoginScreen';
+import Button from './button/button';
 import HomePage from './Tabs/Homepage';
 import SignUpScreen from './Tabs/SignUpScreen';
 import MedicineDetails from './Tabs/MedicineDetails';
 import Vitamins from './Tabs/Vitamins';
+
 
 const Stack = createStackNavigator();
 
@@ -16,15 +17,13 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="Register" component={SignUpScreen} />
         <Stack.Screen name="MedicineDetails" component={MedicineDetails} />
         <Stack.Screen name="Vitamins" component={Vitamins} />
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -32,7 +31,7 @@ const App = () => {
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>GET STARTED</Text>
       </View>
@@ -46,7 +45,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.footer}>
-        {/* Use the LoginButton component and navigate to the Login screen */}
         <Button title="Login" onPress={() => navigation.navigate('Login')} />
         <Button title="Register" onPress={() => navigation.navigate('Register')} />
       </View>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Calendar } from 'react-native-calendars';
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -8,10 +9,20 @@ const HomePage = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  // Extract the fullName parameter from the route's params
   const fullName = route.params?.fullName;
 
   const [searchText, setSearchText] = useState('');
+  const [selectedDates, setSelectedDates] = useState({});
+
+  const handleDateSelect = (day) => {
+    const selectedDate = day.dateString;
+    setSelectedDates((prevSelectedDates) => ({
+      ...prevSelectedDates,
+      [selectedDate]: {
+        selected: !prevSelectedDates[selectedDate]?.selected,
+      },
+    }));
+  };
 
   const handleSearch = () => {
     const searchLowerCase = searchText.toLowerCase();
@@ -26,13 +37,12 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        {/* Display the user's name in the "Welcome USER" text */}
         <Text style={styles.smallText}>Welcome {fullName}</Text>
         <Text style={styles.bigText}>Finding a perfect medicine?</Text>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search medicine ex.'Biogesic'"
+            placeholder="Search medicine ex. 'Biogesic'"
             onChangeText={setSearchText}
             value={searchText}
           />
@@ -44,36 +54,40 @@ const HomePage = () => {
       <View style={styles.lowerHalf}>
         <Text style={styles.categoriesText}>Categories</Text>
         <View style={styles.iconContainer}>
-          <Pressable
-            style={styles.icon}
-            onPress={() => navigation.navigate('MedicineDetails', { searchText: 'Medicine' })}
-          >
-            <Image source={require('../assets/medicine.png')} style={styles.iconImage} />
-            <Text style={styles.iconText}>Medicine</Text>
-          </Pressable>
-          <Pressable
-            style={styles.icon}
-            onPress={() => navigation.navigate('Vitamins')}
-          >
-            <Image source={require('../assets/vitamins.png')} style={styles.iconImage} />
-            <Text style={styles.iconText}>Vitamins</Text>
-          </Pressable>
-          <Pressable
-            style={styles.icon}
-            onPress={() => navigation.navigate('MedicineComparer')}
-          >
-            <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
-            <Text style={styles.iconText}>Medicine Comparer</Text>
-          </Pressable>
+          <View style={styles.circleBackground}>
+            <Pressable
+              style={styles.icon}
+              onPress={() => navigation.navigate('MedicineDetails', { searchText: 'Medicine' })}
+            >
+              <Image source={require('../assets/medicine.png')} style={styles.iconImage} />
+            </Pressable>
+          </View>
+          <View style={styles.circleBackground}>
+            <Pressable
+              style={styles.icon}
+              onPress={() => navigation.navigate('Vitamins')}
+            >
+              <Image source={require('../assets/vitamins.png')} style={styles.iconImage} />
+            </Pressable>
+          </View>
+          <View style={styles.circleBackground}>
+            <Pressable
+              style={styles.icon}
+              onPress={() => navigation.navigate('MedicineComparer')}
+            >
+              <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
+            </Pressable>
+          </View>
         </View>
-        <Pressable
-          style={styles.calendarButton}
-          onPress={() => {
-            // Handle calendar button click
-          }}
-        >
-          <Text style={styles.calendarText}>Calendar</Text>
-        </Pressable>
+        <View style={styles.calendarContainer}>
+          <Calendar
+            markedDates={selectedDates}
+            onDayPress={handleDateSelect}
+            theme={{
+              calendarBackground: '#D0D4CA',
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -82,7 +96,7 @@ const HomePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00F1C6',
+    backgroundColor: '#C9F5FF',
   },
   upperHalf: {
     height: screenHeight * 0.4,
@@ -91,10 +105,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#6499E9',
     justifyContent: 'center',
     borderBottomRightRadius: 40,
-    borderBottomLeftRadius: 40
+    borderBottomLeftRadius: 40,
   },
   lowerHalf: {
-    marginTop: 10,
     flex: 1,
     paddingHorizontal: 20,
   },
@@ -103,13 +116,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     position: 'relative',
     marginLeft: -200,
-    color: 'white'
+    color: 'white',
   },
   bigText: {
     fontSize: 40,
     marginBottom: 10,
     position: 'relative',
-    color: 'white'
+    color: 'white',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -130,37 +143,35 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  calendarContainer: {
+    marginTop: 20,
+    aspectRatio: 1,
+    overflow: 'scroll',
+    borderRadius: 20,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+  },
   categoriesText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
   iconContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
+    justifyContent: 'space-around', // Add space between the circles
+    marginTop: 20,
+  },
+  circleBackground: {
+    backgroundColor: 'white',
+    borderRadius: 50, // Adjust the size of the circle
+    padding: 5,
   },
   icon: {
     alignItems: 'center',
-    marginHorizontal: 10,
   },
   iconImage: {
     width: 60,
     height: 60,
     resizeMode: 'contain',
-  },
-  iconText: {
-    marginTop: 5,
-    fontSize: 14,
-  },
-  calendarButton: {
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
-    marginTop: 20,
-  },
-  calendarText: {
-    fontSize: 16,
   },
 });
 
