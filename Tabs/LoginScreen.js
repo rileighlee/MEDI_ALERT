@@ -10,8 +10,7 @@ const LoginScreen = () => {
   };
 
   const handleSignUpPress = () => {
-    // Navigate to the signup screen
-    navigation.navigate('Register'); // Replace 'SignUp' with the name of your signup screen
+    navigation.navigate('Register');
   };
 
   return (
@@ -40,17 +39,6 @@ const LoginScreen = () => {
       </View>
       <View style={styles.divider}>
         <Text style={styles.dividerText}>────────── or ──────────</Text>
-      </View>
-      <View style={styles.socialButtons}>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/google.png')} style={styles.socialIcon} />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/facebook.png')} style={styles.socialIcon} />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/apple.png')} style={styles.socialIcon} />
-        </Pressable>
       </View>
       <Pressable style={styles.signUp} onPress={handleSignUpPress}>
         <Text style={styles.signUpText}>Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Sign Up</Text></Text>
@@ -117,21 +105,6 @@ const styles = StyleSheet.create({
   dividerText: {
     fontSize: 20,
     color: 'black',
-  },
-  socialButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  socialButton: {
-    backgroundColor: 'transparent',
-    padding: 30,
-    alignItems: 'center',
-  },
-  socialIcon: {
-    width: 36,
-    height: 36,
-    resizeMode: 'contain',
   },
   signUp: {
     alignItems: 'center',

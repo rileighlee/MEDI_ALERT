@@ -8,6 +8,7 @@ import HomePage from './Tabs/Homepage';
 import SignUpScreen from './Tabs/SignUpScreen';
 import MedicineDetails from './Tabs/MedicineDetails';
 import Vitamins from './Tabs/Vitamins';
+import MedicineLists from './Tabs/Medicinelists';
 
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ const App = () => {
         <Stack.Screen name="Register" component={SignUpScreen} />
         <Stack.Screen name="MedicineDetails" component={MedicineDetails} />
         <Stack.Screen name="Vitamins" component={Vitamins} />
+        <Stack.Screen name="MedicineLists" component={MedicineLists} />
       </Stack.Navigator>
     </NavigationContainer>
   );

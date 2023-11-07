@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
-const MedicineDetails = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const MedicineDetails = ({ route }) => {
+  const { medicine } = route.params;
 
   const categories = [
     {
@@ -25,10 +25,6 @@ const MedicineDetails = () => {
     },
   ];
 
-  const handleCategoryClick = (index) => {
-    setSelectedCategory(index === selectedCategory ? null : index);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
@@ -37,25 +33,22 @@ const MedicineDetails = () => {
         </View>
         <View style={styles.rightContent}>
           <Image source={require('../assets/biogesic.jpg')} style={styles.medicineImage} />
-          <Text style={styles.medicineName}>Medicine Name</Text>
+          <Text style={styles.medicineName}>{medicine}</Text>
         </View>
       </View>
       <View style={styles.lowerHalf}>
         {categories.map((category, index) => (
           <Pressable
             key={index}
-            onPress={() => handleCategoryClick(index)}
             style={styles.barContainer}
           >
             <View style={styles.barTitleContainer}>
               <Text style={styles.barTitle}>{category.title}</Text>
               <Text style={styles.downArrow}>▼</Text>
             </View>
-            {selectedCategory === index && (
-              <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>{category.info}</Text>
-              </View>
-            )}
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>{category.info}</Text>
+            </View>
           </Pressable>
         ))}
         <Text style={styles.consultDoctorText}>
@@ -65,6 +58,7 @@ const MedicineDetails = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

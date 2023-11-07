@@ -40,20 +40,6 @@ const SignUpScreen = () => {
       <Pressable style={styles.signUpButton} onPress={handleSignUpPress}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
-      <View style={styles.divider}>
-        <Text style={styles.dividerText}>────────── or ──────────</Text>
-      </View>
-      <View style={styles.socialButtons}>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/google.png')} style={styles.socialIcon} />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/facebook.png')} style={styles.socialIcon} />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <Image source={require('../assets/apple.png')} style={styles.socialIcon} />
-        </Pressable>
-      </View>
     </View>
   );
 };
@@ -108,29 +94,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  divider: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  dividerText: {
-    fontSize: 20,
-    color: 'black',
-  },
-  socialButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  socialButton: {
-    backgroundColor: 'transparent',
-    padding: 30,
-    alignItems: 'center',
-  },
-  socialIcon: {
-    width: 36,
-    height: 36,
-    resizeMode: 'contain',
   },
 });
 

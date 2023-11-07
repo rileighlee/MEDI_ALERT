@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Calendar } from 'react-native-calendars';
 
@@ -11,7 +11,7 @@ const HomePage = () => {
 
   const fullName = route.params?.fullName;
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState({});
   const [selectedDates, setSelectedDates] = useState({});
 
   const handleDateSelect = (day) => {
@@ -22,15 +22,29 @@ const HomePage = () => {
         selected: !prevSelectedDates[selectedDate]?.selected,
       },
     }));
+
+    // Display a basic alert when a date is selected
+    Alert.alert(
+      'Calendar Event',
+      `You have an event on ${selectedDate}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const handleSearch = () => {
     const searchLowerCase = searchText.toLowerCase();
+    const isVitaminSearch = searchLowerCase.includes('vitamin');
 
-    if (searchLowerCase.includes('vitamin')) {
+    if (isVitaminSearch) {
       navigation.navigate('Vitamins');
-    } else {
-      navigation.navigate('MedicineDetails', { searchText });
+    } else if (searchText.trim() !== '') {
+      navigation.navigate('MedicineDetails', { medicine: searchText });
     }
   };
 
@@ -46,37 +60,37 @@ const HomePage = () => {
             onChangeText={setSearchText}
             value={searchText}
           />
-          <Pressable onPress={handleSearch} style={styles.searchIcon}>
+          <TouchableOpacity onPress={handleSearch} style={styles.searchIcon}>
             <Image source={require('../assets/search.png')} style={styles.searchImage} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.lowerHalf}>
         <Text style={styles.categoriesText}>Categories</Text>
         <View style={styles.iconContainer}>
           <View style={styles.circleBackground}>
-            <Pressable
+            <TouchableOpacity
               style={styles.icon}
-              onPress={() => navigation.navigate('MedicineDetails', { searchText: 'Medicine' })}
+              onPress={() => navigation.navigate('MedicineLists', { searchText: 'Medicine' })}
             >
               <Image source={require('../assets/medicine.png')} style={styles.iconImage} />
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={styles.circleBackground}>
-            <Pressable
+            <TouchableOpacity
               style={styles.icon}
               onPress={() => navigation.navigate('Vitamins')}
             >
               <Image source={require('../assets/vitamins.png')} style={styles.iconImage} />
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={styles.circleBackground}>
-            <Pressable
+            <TouchableOpacity
               style={styles.icon}
               onPress={() => navigation.navigate('MedicineComparer')}
             >
               <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.calendarContainer}>
@@ -157,12 +171,12 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around', // Add space between the circles
+    justifyContent: 'space-around',
     marginTop: 20,
   },
   circleBackground: {
     backgroundColor: 'white',
-    borderRadius: 50, // Adjust the size of the circle
+    borderRadius: 50,
     padding: 5,
   },
   icon: {
