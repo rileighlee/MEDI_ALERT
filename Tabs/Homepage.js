@@ -87,7 +87,7 @@ const HomePage = () => {
           <View style={styles.circleBackground}>
             <TouchableOpacity
               style={styles.icon}
-              onPress={() => navigation.navigate('MedicineComparer')}
+              onPress={() => navigation.navigate('MedicineInteractionChecker')}
             >
               <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
             </TouchableOpacity>

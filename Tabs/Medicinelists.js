@@ -82,6 +82,7 @@ const MedicineLists = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FADEFF',
   },
   upperHalf: {
     height: screenHeight * 0.3,
@@ -105,8 +106,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   lowerHalf: {
-    backgroundColor: '#FADEFF',
-    flex: 1,
     paddingHorizontal: 20,
     marginTop: 10,
   },
