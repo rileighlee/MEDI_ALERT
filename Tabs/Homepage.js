@@ -11,7 +11,8 @@ const HomePage = () => {
 
   const fullName = route.params?.fullName;
 
-  const [searchText, setSearchText] = useState({});
+  // Initialize searchText as an empty string
+  const [searchText, setSearchText] = useState('');
   const [selectedDates, setSelectedDates] = useState({});
 
   const handleDateSelect = (day) => {
@@ -143,15 +144,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 25,
-    paddingLeft: 4,
+    paddingHorizontal: 20, // Adjusted padding
+    marginHorizontal: 10, // Adjusted margin
+    marginTop: 10, // Adjusted margin
   },
   searchInput: {
-    flex: 10,
+    flex: 1, // Adjusted flex
     fontSize: 16,
     paddingVertical: 5,
   },
   searchIcon: {
     padding: 10,
+    marginLeft: 'auto', // Align to the right end
   },
   searchImage: {
     width: 20,
