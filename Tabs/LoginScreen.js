@@ -13,6 +13,10 @@ const LoginScreen = () => {
     navigation.navigate('Register');
   };
 
+  const handleForgotPassword = () => {
+    navigation.navigate('ForgotPassword'); // Navigate to the ForgotPassword screen
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,7 +37,7 @@ const LoginScreen = () => {
         <Pressable style={styles.loginButton} onPress={handleHomePage}>
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>
-        <Pressable style={styles.forgotPassword}>
+        <Pressable style={styles.forgotPassword} onPress={handleForgotPassword}>
           <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
         </Pressable>
       </View>

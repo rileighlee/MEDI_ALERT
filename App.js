@@ -10,6 +10,7 @@ import MedicineDetails from './Tabs/MedicineDetails';
 import Vitamins from './Tabs/Vitamins';
 import MedicineLists from './Tabs/Medicinelists';
 import MedicineInteractionChecker from './Tabs/MedicineInteractionChecker';
+import ForgotPassword from './Tabs/ForgotPassword';
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,7 @@ const App = () => {
         <Stack.Screen name="Vitamins" component={Vitamins} />
         <Stack.Screen name="MedicineLists" component={MedicineLists} />
         <Stack.Screen name="MedicineInteractionChecker" component={MedicineInteractionChecker} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
