@@ -1,58 +1,100 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Calendar } from 'react-native-calendars';
+import React, { useState, useContext, useEffect } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  Button,
+  Modal,
+  ScrollView,
+} from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { AuthContext } from "../services/Auth";
+import ApiService from "../services/ApiService";
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get("window");
 
 const HomePage = () => {
-  const navigation = useNavigation();
   const route = useRoute();
+  const { token } = useContext(AuthContext);
+  const [fullName, setFullName] = useState("");
 
-  const fullName = route.params?.fullName;
-
-  // Initialize searchText as an empty string
-  const [searchText, setSearchText] = useState('');
-  const [selectedDates, setSelectedDates] = useState({});
-
-  const handleDateSelect = (day) => {
-    const selectedDate = day.dateString;
-    setSelectedDates((prevSelectedDates) => ({
-      ...prevSelectedDates,
-      [selectedDate]: {
-        selected: !prevSelectedDates[selectedDate]?.selected,
-      },
-    }));
-
-    // Display a basic alert when a date is selected
-    Alert.alert(
-      'Calendar Event',
-      `You have an event on ${selectedDate}`,
-      [
-        {
-          text: 'OK',
-          onPress: () => console.log('OK Pressed'),
-        },
-      ],
-      { cancelable: false }
-    );
+  const handleLogout = () => {
+    // Implement your logout logic here
+    // For example:
+    navigation.navigate("Login"); // Navigate to the login screen after logout
   };
 
-  const handleSearch = () => {
-    const searchLowerCase = searchText.toLowerCase();
-    const isVitaminSearch = searchLowerCase.includes('vitamin');
+  // Set up the navigation options for the header
 
-    if (isVitaminSearch) {
-      navigation.navigate('Vitamins');
-    } else if (searchText.trim() !== '') {
-      navigation.navigate('MedicineDetails', { medicine: searchText });
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const userDetails = await ApiService.getUserDetail(token);
+        if (userDetails && userDetails.fullName) {
+          setFullName(userDetails.fullName);
+        } else {
+          setFullName(""); // Set fullName to an empty string if userDetails.fullName is missing
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error.message);
+        // Handle error fetching user details
+        setFullName(""); // Set fullName to an empty string in case of an error
+      }
+    };
+
+    if (token) {
+      fetchUserDetails();
+    }
+  }, [token]);
+
+  // Initialize searchText as an empty string
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+
+  const handleSearch = async () => {
+    try {
+      const results = await ApiService.getMedicineByName(searchText);
+      setSearchResults(results);
+      setModalVisible(true);
+    } catch (error) {
+      console.error("Error searching medicine:", error.message);
+      // Handle error
     }
   };
 
+  const navigateToMedicineDetails = (medicineId) => {
+    navigation.navigate("MedicineDetails", { medicineId });
+    setModalVisible(false);
+  };
+  
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: `Hi, ${fullName || "User"}!`, // Fallback to 'User' if fullName is not available
+      headerLeft: null, // Hide the back button
+      headerRight: () => (
+        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+          <FontAwesome name="sign-out" size={25} color="white" />
+        </TouchableOpacity>
+        // Replace this button with your custom LogoutButton component
+      ),
+      headerStyle: {
+        backgroundColor: "#6499E9", // Set header background color
+      },
+      headerTintColor: "white",
+    });
+  }, [navigation, fullName]);
+  
   return (
     <View style={styles.container}>
       <View style={styles.upperHalf}>
-        <Text style={styles.smallText}>Welcome USER{fullName}</Text>
         <Text style={styles.bigText}>Finding a perfect medicine?</Text>
         <View style={styles.searchContainer}>
           <TextInput
@@ -62,7 +104,10 @@ const HomePage = () => {
             value={searchText}
           />
           <TouchableOpacity onPress={handleSearch} style={styles.searchIcon}>
-            <Image source={require('../assets/search.png')} style={styles.searchImage} />
+            <Image
+              source={require("../assets/search.png")}
+              style={styles.searchImage}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -72,38 +117,62 @@ const HomePage = () => {
           <View style={styles.circleBackground}>
             <TouchableOpacity
               style={styles.icon}
-              onPress={() => navigation.navigate('MedicineLists', { searchText: 'Medicine' })}
+              onPress={() =>
+                navigation.navigate("MedicineLists", {
+                  searchText: "Medicine",
+                })
+              }
             >
-              <Image source={require('../assets/medicine.png')} style={styles.iconImage} />
+              <Image
+                source={require("../assets/medicine.png")}
+                style={styles.iconImage}
+              />
             </TouchableOpacity>
           </View>
           <View style={styles.circleBackground}>
             <TouchableOpacity
               style={styles.icon}
-              onPress={() => navigation.navigate('Vitamins')}
+              onPress={() => navigation.navigate("Vitamins")}
             >
-              <Image source={require('../assets/vitamins.png')} style={styles.iconImage} />
+              <Image
+                source={require("../assets/vitamins.png")}
+                style={styles.iconImage}
+              />
             </TouchableOpacity>
           </View>
           <View style={styles.circleBackground}>
             <TouchableOpacity
               style={styles.icon}
-              onPress={() => navigation.navigate('MedicineInteractionChecker')}
+              onPress={() => navigation.navigate("MedicineInteractionChecker")}
             >
-              <Image source={require('../assets/comparing.png')} style={styles.iconImage} />
+              <Image
+                source={require("../assets/comparing.png")}
+                style={styles.iconImage}
+              />
             </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.calendarContainer}>
-          <Calendar
-            markedDates={selectedDates}
-            onDayPress={handleDateSelect}
-            theme={{
-              calendarBackground: '#D0D4CA',
-            }}
-          />
         </View>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            {searchResults.map((result) => (
+              <TouchableOpacity
+                key={result.id}
+                style={styles.resultContainer}
+                onPress={() => navigateToMedicineDetails(result.id)}
+              >
+                <Text style={styles.resultText}>{result.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -111,14 +180,14 @@ const HomePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C9F5FF',
+    backgroundColor: "#C9F5FF",
   },
   upperHalf: {
     height: screenHeight * 0.4,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#6499E9',
-    justifyContent: 'center',
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#6499E9",
+    justifyContent: "center",
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
   },
@@ -127,22 +196,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   smallText: {
-    fontSize: 12,
+    fontSize: 15,
     marginBottom: 10,
-    position: 'relative',
+    position: "relative",
     marginLeft: -200,
-    color: 'white',
+    color: "white",
   },
   bigText: {
     fontSize: 40,
     marginBottom: 10,
-    position: 'relative',
-    color: 'white',
+    position: "relative",
+    color: "white",
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
     borderRadius: 25,
     paddingHorizontal: 20, // Adjusted padding
     marginHorizontal: 10, // Adjusted margin
@@ -155,7 +224,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     padding: 10,
-    marginLeft: 'auto', // Align to the right end
+    marginLeft: "auto", // Align to the right end
   },
   searchImage: {
     width: 20,
@@ -164,32 +233,61 @@ const styles = StyleSheet.create({
   calendarContainer: {
     marginTop: 20,
     aspectRatio: 1,
-    overflow: 'scroll',
+    overflow: "scroll",
     borderRadius: 20,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
   },
   categoriesText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   iconContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 20,
   },
   circleBackground: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 50,
     padding: 5,
   },
   icon: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   iconImage: {
     width: 60,
     height: 60,
-    resizeMode: 'contain',
+    resizeMode: "contain",
+  },
+  logoutButton: {
+    marginRight: 10, // Adjust spacing if needed
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 50,
+  },
+  resultContainer: {
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    width: "80%",
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
+  resultText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

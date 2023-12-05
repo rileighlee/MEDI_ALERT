@@ -1,12 +1,30 @@
-import React from 'react';
-import { View, Text, TextInput, Pressable, Image, StyleSheet } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import ApiService from '../services/ApiService';
+import { AuthContext } from '../services/Auth'; // Import AuthContext as named export
 
 const LoginScreen = () => {
+  const { saveToken } = useContext(AuthContext);
   const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleHomePage = () => {
-    navigation.navigate('HomePage');
+  const handleHomePage = async () => {
+    try {
+      const token = await ApiService.login(email, password);
+      if (token) {
+        // Assuming successful login, navigate to HomePage or handle accordingly
+        saveToken(token);
+        setEmail('');
+        setPassword('');
+        navigation.navigate('HomePage');
+      }
+    } catch (error) {
+      console.error('Login error:', error.message);
+      // Handle login error (e.g., show an error message to the user)
+      Alert.alert('Login Error', 'Incorrect email or password. Please try again.');
+    }
   };
 
   const handleSignUpPress = () => {
@@ -14,7 +32,7 @@ const LoginScreen = () => {
   };
 
   const handleForgotPassword = () => {
-    navigation.navigate('ForgotPassword'); // Navigate to the ForgotPassword screen
+    navigation.navigate('ForgotPassword');
   };
 
   return (
@@ -26,13 +44,15 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Email"
           style={styles.input}
-          // Add onChangeText to handle email input
+          onChangeText={(text) => setEmail(text)} // Update email state
+          value={email} // Set value from state
         />
         <TextInput
           placeholder="Password"
           style={styles.input}
           secureTextEntry={true}
-          // Add onChangeText to handle password input
+          onChangeText={(text) => setPassword(text)} // Update password state
+          value={password} // Set value from state
         />
         <Pressable style={styles.loginButton} onPress={handleHomePage}>
           <Text style={styles.buttonText}>Login</Text>
@@ -45,9 +65,13 @@ const LoginScreen = () => {
         <Text style={styles.dividerText}>────────── or ──────────</Text>
       </View>
       <Pressable style={styles.signUp} onPress={handleSignUpPress}>
-        <Text style={styles.signUpText}>Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Sign Up</Text></Text>
+        <Text style={styles.signUpText}>
+          Don't have an account?{' '}
+          <Text style={{ textDecorationLine: 'underline' }}>Sign Up</Text>
+        </Text>
       </Pressable>
     </View>
+
   );
 };
 
