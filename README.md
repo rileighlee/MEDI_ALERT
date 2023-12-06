@@ -30,8 +30,10 @@ Step 2: Set up and connect
 2. Launch Navicat and have a connection profile set in the backend database.
 3. Import data into the database
 
-
+'''bash
 npm start
+
+bash'''
 
 
 4. Click the Tools > Nuget Package Manager > Package Manager Console
