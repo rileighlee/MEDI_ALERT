@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(
             options =>
                 options.UseSqlServer(
-                        "Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;",
+                        "Server=localhost\\SQLEXPRESS;Database=MedicineAppApi;Trusted_Connection=True;",
                         b => b.MigrationsAssembly("MedicineAppApi")
             )
 );
