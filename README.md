@@ -24,7 +24,6 @@ Step 1- Install or extract the following
 1. Download the Zip file of the Medi-Alert Mobile App backend and frontend located in Github and extract them.
 2. Download and Install Navicat - https://navicat.com/en/products
 3. Download the Visual Studio Community and install - https://visualstudio.microsoft.com/vs/community/
-4. 
 
 Step 2: Set up and connect
 1. Open the Visual 
