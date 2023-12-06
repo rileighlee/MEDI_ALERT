@@ -39,9 +39,5 @@ code snippets
 npm install
 
 
-
-4. Click tools and then Nuget Package Manager
-5. Package Manage Console > Type
-'''bash
 update-database
 
