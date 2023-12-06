@@ -39,7 +39,10 @@ npm start
 4. Click the Tools > Nuget Package Manager > Package Manager Console
 5. Type 'update-database'
 
+```bash
 update-database
+
+```
 Step 2: Set up and connect
 1. Open the Visual 
 2. Launch Navicat and have a connection profile set in the backend database.
