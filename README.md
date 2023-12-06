@@ -34,9 +34,6 @@ Step 2: Set up and connect
 ```bash
 npm start
 
-exit
-logout
-
 4. Click the Tools > Nuget Package Manager > Package Manager Console
 5. Type 'update-database'
 '''bash
