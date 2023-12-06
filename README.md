@@ -62,4 +62,4 @@ Step 1 - Set up and connect
 
 ### Run the Application
 Step 1 - Run the Application
-1. Run the Codes for backend in the Visual Studio 2022
+1. Click run the Codes for backend in the Visual Studio 2022
