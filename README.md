@@ -29,7 +29,7 @@ Step 2: Set up and connect
 2. Launch Navicat and set a connection profile in the backend database.
 3. Import data into the database
 
-### Set up and Run the Application
+### Set up the Application
 Step 1 - Run the Command for Frontend
 1. Open the Visual Studio Code
 2. Run codes for FrontEnd
